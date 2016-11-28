@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
+import static org.grobid.core.engines.QuantitiesTaggingLabels.UNIT_VALUE_OTHER;
+import static org.grobid.core.engines.QuantitiesTaggingLabels.UNIT_VALUE_POW;
 
 /**
  * Created by lfoppiano on 20.02.16.
@@ -122,57 +124,51 @@ public class UnitParser extends AbstractParser {
             TaggingLabel clusterLabel = cluster.getTaggingLabel();
             String clusterContent = LayoutTokensUtil.toText(cluster.concatTokens());
 
-            switch (clusterLabel) {
-                case UNIT_VALUE_PREFIX:
-                    if (!startUnit) {
-                        startUnit = true;
-                    } else {
+            if (clusterLabel.equals(QuantitiesTaggingLabels.UNIT_VALUE_PREFIX)) {
+                if (!startUnit) {
+                    startUnit = true;
+                } else {
+                    units.add(unitBlock);
+                    unitBlock = new UnitBlock();
+                }
+                unitBlock.setPrefix(clusterContent);
+
+
+            } else if (clusterLabel.equals(QuantitiesTaggingLabels.UNIT_VALUE_BASE)) {
+                if (!startUnit) {
+                    startUnit = true;
+                    unitBlock = new UnitBlock();
+                } else {
+                    if (QuantitiesTaggingLabels.UNIT_VALUE_PREFIX != previousTag) {
                         units.add(unitBlock);
                         unitBlock = new UnitBlock();
                     }
-                    unitBlock.setPrefix(clusterContent);
 
-                    break;
-
-                case UNIT_VALUE_BASE:
-                    if (!startUnit) {
-                        startUnit = true;
-                        unitBlock = new UnitBlock();
-                    } else {
-                        if (!TaggingLabel.UNIT_VALUE_PREFIX.equals(previousTag)) {
-                            units.add(unitBlock);
-                            unitBlock = new UnitBlock();
-                        }
-
-                        if (denominator) {
-                            unitBlock.setPow("-1");
-                        }
+                    if (denominator) {
+                        unitBlock.setPow("-1");
                     }
-                    unitBlock.setBase(clusterContent);
-                    System.out.print(clusterContent + "(B)");
-                    break;
-
-                case UNIT_VALUE_OTHER:
-                    System.out.print(clusterContent + "(O)");
-                    break;
-
-                case UNIT_VALUE_POW:
-                    if (clusterContent.equals("/")) {
-                        denominator = true;
-                    } else if (clusterContent.endsWith("/")) {
-                        denominator = true;
-                        unitBlock.setPow(clusterContent.replace("/", ""));
-                    } else if (clusterContent.equals("*")) {
-                        //nothing to do
+                }
+                unitBlock.setBase(clusterContent);
+                System.out.print(clusterContent + "(B)");
+            } else if (clusterLabel.equals(UNIT_VALUE_OTHER)) {
+                System.out.print(clusterContent + "(O)");
+            } else if (clusterLabel.equals(UNIT_VALUE_POW)) {
+                if (clusterContent.equals("/")) {
+                    denominator = true;
+                } else if (clusterContent.endsWith("/")) {
+                    denominator = true;
+                    unitBlock.setPow(clusterContent.replace("/", ""));
+                } else if (clusterContent.equals("*")) {
+                    //nothing to do
+                } else {
+                    if (denominator == true) {
+                        unitBlock.setPow("-" + clusterContent);
                     } else {
-                        if (denominator == true) {
-                            unitBlock.setPow("-" + clusterContent);
-                        } else {
-                            unitBlock.setPow(clusterContent);
-                        }
+                        unitBlock.setPow(clusterContent);
                     }
-                    System.out.print(clusterContent + "(P)");
-                    break;
+                }
+                System.out.print(clusterContent + "(P)");
+                break;
 
             }
             previousTag = clusterLabel;
