@@ -42,7 +42,7 @@ public class UnitParser extends AbstractParser {
     private QuantityLexicon quantityLexicon = null;
 
     private UnitParser() {
-        super(GrobidModels.UNITS);
+        super(QuantitiesModels.UNITS);
         quantityLexicon = QuantityLexicon.getInstance();
     }
 
@@ -103,7 +103,7 @@ public class UnitParser extends AbstractParser {
     public List<UnitBlock> resultExtraction(String text,
                                             String result,
                                             List<LayoutToken> tokenizations) {
-        TaggingTokenClusteror clusteror = new TaggingTokenClusteror(GrobidModels.UNITS, result, tokenizations);
+        TaggingTokenClusteror clusteror = new TaggingTokenClusteror(QuantitiesModels.UNITS, result, tokenizations);
         List<TaggingTokenCluster> clusters = clusteror.cluster();
 
         int pos = 0; // position in term of characters for creating the offsets

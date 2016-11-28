@@ -74,7 +74,7 @@ public class QuantityParser extends AbstractParser {
     private MeasurementOperations measurementOperations = null;
 
     private QuantityParser() {
-        super(GrobidModels.QUANTITIES);
+        super(QuantitiesModels.QUANTITIES);
         quantityLexicon = QuantityLexicon.getInstance();
         measurementOperations = new MeasurementOperations();
     }
@@ -580,7 +580,7 @@ public class QuantityParser extends AbstractParser {
                                                 List<LayoutToken> tokenizations) {
         List<Measurement> measurements = new ArrayList<>();
 
-        TaggingTokenClusteror clusteror = new TaggingTokenClusteror(GrobidModels.QUANTITIES, result, tokenizations);
+        TaggingTokenClusteror clusteror = new TaggingTokenClusteror(QuantitiesModels.QUANTITIES, result, tokenizations);
         List<TaggingTokenCluster> clusters = clusteror.cluster();
 
         Unit currentUnit = new Unit();
