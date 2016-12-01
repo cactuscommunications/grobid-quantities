@@ -3,7 +3,6 @@ package org.grobid.core.engines;
 import nu.xom.Attribute;
 import nu.xom.Element;
 import org.apache.commons.io.FileUtils;
-import org.grobid.core.GrobidModels;
 import org.grobid.core.analyzers.QuantityAnalyzer;
 import org.grobid.core.data.Measurement;
 import org.grobid.core.data.Quantity;
@@ -13,6 +12,8 @@ import org.grobid.core.data.normalization.QuantityNormalizer;
 import org.grobid.core.document.Document;
 import org.grobid.core.document.xml.XmlBuilderUtils;
 import org.grobid.core.engines.config.GrobidAnalysisConfig;
+import org.grobid.core.engines.label.QuantitiesTaggingLabels;
+import org.grobid.core.engines.label.TaggingLabel;
 import org.grobid.core.exceptions.GrobidException;
 import org.grobid.core.factory.GrobidFactory;
 import org.grobid.core.features.FeaturesVectorQuantities;
@@ -41,8 +42,7 @@ import java.util.TimeZone;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.grobid.core.document.xml.XmlBuilderUtils.teiElement;
-import static org.grobid.core.engines.QuantitiesTaggingLabels.*;
-import static org.grobid.core.engines.QuantitiesTaggingLabels.QUANTITY_UNIT_RIGHT;
+import static org.grobid.core.engines.label.QuantitiesTaggingLabels.*;
 
 /**
  * Quantity/measurement extraction.

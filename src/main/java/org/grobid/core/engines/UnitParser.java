@@ -1,7 +1,8 @@
 package org.grobid.core.engines;
 
-import org.grobid.core.GrobidModels;
 import org.grobid.core.data.UnitBlock;
+import org.grobid.core.engines.label.QuantitiesTaggingLabels;
+import org.grobid.core.engines.label.TaggingLabel;
 import org.grobid.core.exceptions.GrobidException;
 import org.grobid.core.features.FeaturesVectorUnit;
 import org.grobid.core.layout.LayoutToken;
@@ -17,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.commons.lang3.StringUtils.isBlank;
-import static org.grobid.core.engines.QuantitiesTaggingLabels.UNIT_VALUE_OTHER;
-import static org.grobid.core.engines.QuantitiesTaggingLabels.UNIT_VALUE_POW;
+import static org.grobid.core.engines.label.QuantitiesTaggingLabels.UNIT_VALUE_OTHER;
+import static org.grobid.core.engines.label.QuantitiesTaggingLabels.UNIT_VALUE_POW;
 
 /**
  * Created by lfoppiano on 20.02.16.

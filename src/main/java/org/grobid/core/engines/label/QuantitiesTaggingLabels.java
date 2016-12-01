@@ -1,6 +1,6 @@
-package org.grobid.core.engines;
+package org.grobid.core.engines.label;
 
-import org.grobid.core.GrobidModels;
+import org.grobid.core.engines.QuantitiesModels;
 
 /**
  * Created by lfoppiano on 28/11/16.
