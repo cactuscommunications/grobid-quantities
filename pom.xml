@@ -23,7 +23,7 @@
         <license.file>${basedir}/LICENSE</license.file>
         <!-- <notice.file>${basedir}/NOTICE</notice.file> -->
         <jersey.version>1.8</jersey.version>
-        <jackson.version>2.9.0.pr3</jackson.version>
+        <jackson.version>2.12.1</jackson.version>
     </properties>
 
     <repositories>
